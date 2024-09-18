@@ -17,3 +17,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('hello') {
+    group = 'demo'
+    description = 'Demo task'
+    doLast {
+        print('Hello')
+    }
+}
