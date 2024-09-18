@@ -1,5 +1,13 @@
 plugins {
     id 'java'
+    id "ca.cutterslade.analyze" version "1.10.0"
+    id 'com.github.ben-manes.versions' version '0.38.0'
+    id 'com.adarshr.test-logger' version '3.2.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 group = 'org.example'
@@ -10,6 +18,7 @@ repositories {
 }
 
 dependencies {
+    implementation "com.google.zxing:javase:3.5.0"
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -18,10 +27,21 @@ test {
     useJUnitPlatform()
 }
 
+defaultTasks('hello')
+
 tasks.register('hello') {
     group = 'demo'
     description = 'Demo task'
+    dependsOn ':intro'
+
     doLast {
-        print('Hello')
+        def welcome = project.findProperty('welcome') ?: 'Hello Gradle'
+        println welcome
+    }
+}
+
+tasks.register('intro'){
+    doLast {
+        println 'I am Gradle'
     }
 }
